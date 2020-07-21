@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/overstarry/blog-service/pkg/logger"
-	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/overstarry/blog-service/pkg/logger"
+	"gopkg.in/natefinch/lumberjack.v2"
 
 	"github.com/gin-gonic/gin"
 
@@ -27,17 +28,10 @@ func init() {
 	err = setupLogger()
 }
 
-func setupLogger() error {
-	logger.NewLogger(&lumberjack.Logger{
-		Filename: global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName +
-			global.AppSetting.LogFileExt,
-		MaxSize:   600,
-		MaxAge:    10,
-		LocalTime: true,
-	}, "", log.LstdFlags).WithCaller(2)
-	return nil
-}
-
+// @title 博客系统
+// @version 1.0
+// @description 博客系统
+// @termsOfService https://github.com/overstarry
 func main() {
 	gin.SetMode(global.ServerSetting.RunMode)
 	router := routers.NewRouter()
@@ -78,5 +72,16 @@ func setupDBEngine() error {
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func setupLogger() error {
+	logger.NewLogger(&lumberjack.Logger{
+		Filename: global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName +
+			global.AppSetting.LogFileExt,
+		MaxSize:   600,
+		MaxAge:    10,
+		LocalTime: true,
+	}, "", log.LstdFlags).WithCaller(2)
 	return nil
 }
